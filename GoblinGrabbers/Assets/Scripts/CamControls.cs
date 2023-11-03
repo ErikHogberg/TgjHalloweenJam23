@@ -14,8 +14,8 @@ public class CamControls : MonoBehaviour {
 	public Vector2 DeltaMinMax = Vector2.up;
 	public AnimationCurve FollowSpeedCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-
-	public bool RightMode = true;
+	public bool StartRightMode = true;
+	public static bool RightMode = true;
 
 	[Space]
 	public Camera Cam;
@@ -26,6 +26,10 @@ public class CamControls : MonoBehaviour {
 
 
 	float lerp = 0;
+
+	private void Start() {
+		RightMode = StartRightMode;
+	}
 
 	void Update() {
 

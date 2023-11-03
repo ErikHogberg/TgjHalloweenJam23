@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerContoller : MonoBehaviour {
 
-	public CamControls Cam;
+	// public CamControls Cam;
+	public Transform TileParent;
 
 	[Space]
 	public float MoveSpeed = 1;
@@ -16,12 +17,14 @@ public class PlayerContoller : MonoBehaviour {
 
 
 		if (kbd.dKey.isPressed) {
-			transform.localPosition += Vector3.forward * MoveSpeed * Time.deltaTime;
-			Cam.RightMode = true;
+			// transform.localPosition += Vector3.forward * MoveSpeed * Time.deltaTime;
+			TileParent.localPosition -= Vector3.forward * MoveSpeed * Time.deltaTime;
+			CamControls.RightMode = true;
 		}
 		if (kbd.aKey.isPressed) {
-			transform.localPosition += Vector3.back * MoveSpeed * Time.deltaTime;
-			Cam.RightMode = false;
+			// transform.localPosition += Vector3.back * MoveSpeed * Time.deltaTime;
+			TileParent.localPosition -= Vector3.back * MoveSpeed * Time.deltaTime;
+			CamControls.RightMode = false;
 		}
 
 	}
