@@ -306,6 +306,7 @@ MonoBehaviour:
   FloorPrefab: {fileID: 824599873379273021, guid: 68c752ffe89476a4eb04187d996c0103,
     type: 3}
   FloorParent: {fileID: 1632291008}
+  Waves: {fileID: 11400000, guid: a47eee93c90aa6f4588e4a483370a06e, type: 2}
 --- !u!1 &125863292
 GameObject:
   m_ObjectHideFlags: 0

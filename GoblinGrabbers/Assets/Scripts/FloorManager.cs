@@ -24,6 +24,9 @@ public class FloorManager : MonoBehaviour {
 	public Transform FloorParent;
 	public WaveDefinition Waves;
 
+	public static WaveDefinition.FloorEntry CurrentFloorWaves = null;
+
+
 	private void Start() {
 		CurrentFloor = 0;
 		MoveDownInternal(skipMove: true);
@@ -39,8 +42,10 @@ public class FloorManager : MonoBehaviour {
 			CurrentFloor++;
 			PlayerCharacter.transform.position += Vector3.down * YOffset;
 		}
+		CurrentFloorWaves = Waves.GetNearestFloor(CurrentFloor);
 		var floor = Instantiate(FloorPrefab, PlayerCharacter.transform.position, Quaternion.identity, FloorParent);
 		spawnedFloors.Enqueue(floor);
+
 
 		// Despawn floors above last
 		while (spawnedFloors.Count > 2) {
