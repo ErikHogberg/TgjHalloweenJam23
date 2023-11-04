@@ -16,8 +16,14 @@ public class Tile : MonoBehaviour {
 		float z = transform.position.z - initZ;
 		if (z > Threshold) {
 			transform.localPosition += Vector3.back * (Threshold * 2f + initZ);
+			MaybeSpawn();
 		} else if (z < -Threshold) {
 			transform.localPosition += Vector3.forward * (Threshold * 2f - initZ);
+			MaybeSpawn();
 		}
+	}
+
+	void MaybeSpawn(){
+		
 	}
 }
