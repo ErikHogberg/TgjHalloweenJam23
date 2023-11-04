@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
 	public float Threshold = 50;
+	public RectTransform SpawnArea;
 
 	float initZ = 0;
 
