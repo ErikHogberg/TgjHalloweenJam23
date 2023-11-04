@@ -66,8 +66,10 @@ public class PlayerContoller : MonoBehaviour {
 
 	}
 
+	public static float LastDescendZ = 0;
 	public void Descend(float y){
 		referenceY += y;
 		CamControls.FlipMode();
+		LastDescendZ = transform.position.z;
 	}
 }
