@@ -7,6 +7,8 @@ public class PlayerContoller : MonoBehaviour {
 
 	// public CamControls Cam;
 	public Transform TileParent;
+	public Animator Anim;
+	public float AnimSpeedMul = 1f;
 
 	[Space]
 	[Min(0.01f)]
@@ -22,6 +24,7 @@ public class PlayerContoller : MonoBehaviour {
 	float FallVelocity = 0;
 
 	float speedCache = 0;
+	bool grounded = false;
 
 	private void Start() {
 		referenceY = TileParent.position.y - transform.position.y;
@@ -33,41 +36,36 @@ public class PlayerContoller : MonoBehaviour {
 
 		if (kbd.spaceKey.wasPressedThisFrame) {
 			FallVelocity = -JumpVelocity;
+			Anim.SetTrigger("JumpTrigger");
 		}
 
 		float y = TileParent.position.y - transform.position.y;
-		if (y < referenceY || FallVelocity < 0){
+		bool wasGrounded = grounded;
+		grounded = y < referenceY || FallVelocity < 0;
+		if (grounded) {
 			FallVelocity += Gravity;
-			transform.localPosition += Vector3.down * FallVelocity * Time.deltaTime;
+			transform.localPosition += FallVelocity * Time.deltaTime * Vector3.down;
+			// if (!wasGrounded) Anim.SetBool("", true);
 		}
 
-		// if (kbd.dKey.isPressed) {
-		// 	// transform.localPosition += Vector3.forward * MoveSpeed * Time.deltaTime;
-		// 	TileParent.localPosition -= Vector3.forward * MoveSpeed * Time.deltaTime;
-		// 	CamControls.RightMode = true;
+		// if (kbd.fKey.wasPressedThisFrame) {
+		// 	CamControls.FlipMode();
 		// }
-		// if (kbd.aKey.isPressed) {
-		// 	// transform.localPosition += Vector3.back * MoveSpeed * Time.deltaTime;
-		// 	TileParent.localPosition -= Vector3.back * MoveSpeed * Time.deltaTime;
-		// 	CamControls.RightMode = false;
-		// }
-
-		if (kbd.fKey.wasPressedThisFrame) {
-			CamControls.FlipMode();
-		}
 
 		speedCache = Mathf.MoveTowards(speedCache, SpeedCap, RunAcceleration * Time.deltaTime);
 
+		Anim.SetFloat("Speed", speedCache * AnimSpeedMul);
+
 		if (CamControls.RightMode) {
-			TileParent.localPosition -= Vector3.forward * speedCache * Time.deltaTime;
+			TileParent.localPosition -= speedCache * Time.deltaTime * Vector3.forward;
 		} else {
-			TileParent.localPosition -= Vector3.back * speedCache * Time.deltaTime;
+			TileParent.localPosition -= speedCache * Time.deltaTime * Vector3.back;
 		}
 
 	}
 
 	public static float LastDescendZ = 0;
-	public void Descend(float y){
+	public void Descend(float y) {
 		referenceY += y;
 		CamControls.FlipMode();
 		LastDescendZ = transform.position.z;
