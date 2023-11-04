@@ -27,12 +27,12 @@ public class EnemyPooler : MonoBehaviour {
 		PoolDict = new(PoolEntries.Select(entry => new KeyValuePair<string, Enemy>(entry.Key, entry.Value)));
 	}
 
-	public static bool TryGet(string key, out Enemy value) {
+	public static bool TryGet(string name, out Enemy prefab) {
 		if (!MainInstance) {
-			value = null;
+			prefab = null;
 			return false;
 		}
-		return MainInstance.PoolDict.TryGetValue(key, out value);
+		return MainInstance.PoolDict.TryGetValue(name, out prefab);
 	}
 
 }

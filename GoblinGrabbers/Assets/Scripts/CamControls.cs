@@ -17,6 +17,8 @@ public class CamControls : MonoBehaviour {
 	public bool StartRightMode = true;
 	public static bool RightMode = true;
 
+	public static void FlipMode() { RightMode = !RightMode; }
+
 	[Space]
 	public Camera Cam;
 	public Transform LeftNode;
