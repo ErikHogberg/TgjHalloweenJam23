@@ -8,7 +8,9 @@ public class WaveDefinition : ScriptableObject {
 		public float Z = 0;
 		public string[] Enemies;
 
-		public string RandomEnemy => Enemies[Random.Range(0, Enemies.Length-1)];
+		public int RolledEnemyIndex => Random.Range(0, Enemies.Length - 1);
+		public string RandomEnemy => Enemies[RolledEnemyIndex];
+
 	}
 
 	[System.Serializable]
