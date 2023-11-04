@@ -484,7 +484,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   FollowSpeedMul: 20
   FollowSpeedMinMax: {x: 0.1, y: 999}
-  DeltaMinMax: {x: 1, y: 99}
+  DeltaMinMax: {x: 2, y: 99}
   FollowSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -515,6 +515,7 @@ MonoBehaviour:
   LeftNodeLookAt: {fileID: 1584149360}
   RightNode: {fileID: 177312671}
   RightNodeLookAt: {fileID: 125863293}
+  Player: {fileID: 939024663}
 --- !u!1 &222753852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,7 +1451,7 @@ MonoBehaviour:
   MoveSpeed: 9
   SpeedCap: 20
   RunAcceleration: 10
-  JumpVelocity: 30
+  JumpVelocity: 25
   Gravity: 0.3
 --- !u!54 &939024664
 Rigidbody:

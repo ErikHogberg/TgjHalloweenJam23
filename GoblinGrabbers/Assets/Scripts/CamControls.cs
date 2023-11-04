@@ -25,6 +25,7 @@ public class CamControls : MonoBehaviour {
 	public Transform LeftNodeLookAt;
 	public Transform RightNode;
 	public Transform RightNodeLookAt;
+	public PlayerContoller Player;
 
 
 	float lerp = 0;
@@ -41,6 +42,7 @@ public class CamControls : MonoBehaviour {
 
 		float lerpEval = NodeLerpCurve.Evaluate(lerp);
 		Vector3 target = Vector3.Lerp(LeftNode.position, RightNode.position, lerpEval);
+		target.y += (Player.TileParent.position.y - Player.transform.position.y - Player.ReferenceY)*.5f;
 
 		float deltaDistance = (camPos - target).magnitude;
 
