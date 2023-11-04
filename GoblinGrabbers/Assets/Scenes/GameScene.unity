@@ -918,6 +918,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileParent: {fileID: 1632291008}
   MoveSpeed: 9
+  SpeedCap: 20
+  RunAcceleration: 10
+  JumpVelocity: 30
+  Gravity: 0.3
 --- !u!54 &939024664
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -40,10 +40,12 @@ public class FloorManager : MonoBehaviour {
 	private void MoveDownInternal(bool skipMove = false) {
 		if (!skipMove) {
 			CurrentFloor++;
-			PlayerCharacter.transform.position += Vector3.down * YOffset;
+			// PlayerCharacter.transform.position += Vector3.down * YOffset;
+			PlayerCharacter.Descend(YOffset);
 		}
 		CurrentFloorWaves = Waves.GetNearestFloor(CurrentFloor);
-		var floor = Instantiate(FloorPrefab, PlayerCharacter.transform.position, Quaternion.identity, FloorParent);
+		Vector3 newPos = new Vector3(PlayerCharacter.TileParent.position.x, -YOffset * CurrentFloor,0);
+		var floor = Instantiate(FloorPrefab, newPos, Quaternion.identity, FloorParent);
 		spawnedFloors.Enqueue(floor);
 
 
