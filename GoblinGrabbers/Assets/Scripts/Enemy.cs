@@ -9,7 +9,7 @@ public abstract class Enemy : MonoBehaviour
 
 
 	private void OnTriggerEnter(Collider other) {
-		if (other.CompareTag("Player") && other.transform.parent.TryGetComponent<PlayerContoller>(out var component)){
+		if (other.CompareTag("Player") && other.TryGetComponent<PlayerContoller>(out var component)){
 			HitPlayer(component);
 		}
 	}

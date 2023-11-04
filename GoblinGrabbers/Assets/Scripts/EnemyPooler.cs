@@ -13,6 +13,7 @@ public class EnemyPooler : MonoBehaviour {
 		MainInstance = null;
 	}
 
+	[System.Serializable]
 	public class PoolEntry {
 		public string Key;
 		public Enemy Value;
@@ -24,7 +25,7 @@ public class EnemyPooler : MonoBehaviour {
 
 	private void Start() {
 
-		PoolDict = new(PoolEntries.Select(entry => new KeyValuePair<string, Enemy>(entry.Key, entry.Value)));
+		PoolDict = new(PoolEntries.Select(entry => new KeyValuePair<string, Enemy>(entry.Key.ToLower(), entry.Value)));
 	}
 
 	public static bool TryGet(string name, out Enemy prefab) {

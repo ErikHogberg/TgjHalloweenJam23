@@ -22,6 +22,7 @@ public class FloorManager : MonoBehaviour {
 	public float YOffset = 30;
 	public GameObject FloorPrefab;
 	public Transform FloorParent;
+	public WaveDefinition Waves;
 
 	private void Start() {
 		CurrentFloor = 0;

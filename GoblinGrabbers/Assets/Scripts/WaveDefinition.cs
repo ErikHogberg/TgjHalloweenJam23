@@ -5,7 +5,7 @@ public class WaveDefinition : ScriptableObject {
 	[System.Serializable]
 	public class WaveEntry {
 		public float Z = 0;
-		public Enemy[] Enemies;
+		public string[] Enemies;
 	}
 
 	[System.Serializable]
