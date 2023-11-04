@@ -7,12 +7,6 @@ public class Tile : MonoBehaviour {
 	public float Threshold = 50;
 	public RectTransform SpawnArea;
 
-	// float initZ = 0;
-
-	// private void Start() {
-	// 	initZ = transform.localPosition.z;
-	// }
-
 	void Update() {
 		float z = transform.position.z;// + initZ;
 		if (!CamControls.RightMode && z > Threshold * 2) {
@@ -25,8 +19,14 @@ public class Tile : MonoBehaviour {
 	}
 
 	void MaybeSpawn() {
-		Debug.Log($"z: {transform.parent.position.z}, floors: {FloorManager.CurrentFloorWaves != null}");
-		if (FloorManager.CurrentFloorWaves != null && FloorManager.CurrentFloorWaves.TryGetNearestWave(transform.parent.position.z, out var bestWave) && EnemyPooler.TryGet(bestWave.RandomEnemy, out var goblinPrefab)) {
+		float z = -transform.parent.position.z;
+		bool hasWaves = FloorManager.CurrentFloorWaves != null;
+		Debug.Log($"z: {z}, floors: {hasWaves}");
+		if (
+			hasWaves
+			&& FloorManager.CurrentFloorWaves.TryGetNearestWave(z, out var bestWave) 
+			&& EnemyPooler.TryGet(bestWave.RandomEnemy, out var goblinPrefab)
+		) {
 			var goblin = Instantiate(goblinPrefab, transform.position, quaternion.identity, transform);
 			Debug.Log("spawned goblin");
 		}

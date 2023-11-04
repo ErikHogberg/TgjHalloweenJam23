@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCharacter: {fileID: 939024663}
-  YOffset: 30
+  YOffset: 10
   FloorPrefab: {fileID: 824599873379273021, guid: 68c752ffe89476a4eb04187d996c0103,
     type: 3}
   FloorParent: {fileID: 1632291008}
@@ -1279,7 +1279,7 @@ GameObject:
   - component: {fileID: 1787219464}
   m_Layer: 0
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

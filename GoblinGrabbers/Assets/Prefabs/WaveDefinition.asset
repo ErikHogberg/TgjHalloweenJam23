@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4df84e9b5b5a324c98c6926e99c5f43, type: 3}
   m_Name: WaveDefinition
   m_EditorClassIdentifier: 
-  Waves:
+  Floors:
   - FloorsDown: 0
     Waves:
-    - Z: 1
+    - Z: 2
       Enemies:
       - goblin
-    - Z: 1000
+    - Z: 201
       Enemies:
       - trap door
   - FloorsDown: 1
@@ -26,3 +26,6 @@ MonoBehaviour:
     - Z: 0
       Enemies:
       - goblin
+    - Z: 300
+      Enemies:
+      - trap door
