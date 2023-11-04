@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,17 +37,22 @@ public class PlayerContoller : MonoBehaviour {
 
 		if (kbd.spaceKey.wasPressedThisFrame) {
 			FallVelocity = -JumpVelocity;
+			Anim.transform.localPosition = new Vector3(0, -1.2f, 0);
 			Anim.SetTrigger("JumpTrigger");
 		}
 
 		float y = TileParent.position.y - transform.position.y;
 		bool wasGrounded = grounded;
-		grounded = y < referenceY || FallVelocity < 0;
-		if (grounded) {
+		grounded = !(y < referenceY || FallVelocity < 0);
+		if (!grounded) {
 			FallVelocity += Gravity;
 			transform.localPosition += FallVelocity * Time.deltaTime * Vector3.down;
-			// if (!wasGrounded) Anim.SetBool("", true);
+		// } else {
+		// 	var lpos = transform.localPosition;
+		// 	lpos.y = referenceY;
+		// 	transform.localPosition = lpos; 
 		}
+			// else if (!wasGrounded) Anim.SetBool("", true);
 
 		// if (kbd.fKey.wasPressedThisFrame) {
 		// 	CamControls.FlipMode();
@@ -68,6 +74,7 @@ public class PlayerContoller : MonoBehaviour {
 	public void Descend(float y) {
 		referenceY += y;
 		CamControls.FlipMode();
+		Anim.transform.localRotation = CamControls.RightMode ? Quaternion.identity : Quaternion.AngleAxis(180, Vector3.up);
 		LastDescendZ = transform.position.z;
 	}
 }
