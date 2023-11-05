@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FloorManager : MonoBehaviour {
 
@@ -32,6 +33,9 @@ public class FloorManager : MonoBehaviour {
 	public static float PrincessProgress = 1;
 	public static float DragonProgress = 1;
 
+	public UnityEvent OnWin; 
+	public UnityEvent OnLose; 
+
 	private void Start() {
 		DragonFloor = -1;
 		CurrentFloor = 0;
@@ -44,6 +48,7 @@ public class FloorManager : MonoBehaviour {
 		if (DragonFloor - 1 > CurrentFloor) {
 			Debug.Log("lose");
 			// TODO: lose
+			OnLose.Invoke();
 		}
 	}
 
@@ -61,6 +66,7 @@ public class FloorManager : MonoBehaviour {
 			if (CurrentFloor > FloorCount) {
 				Debug.Log("win");
 				// TODO: win
+				OnWin.Invoke();
 			}
 		}
 		PrincessProgress = ((float)CurrentFloor) / FloorCount;

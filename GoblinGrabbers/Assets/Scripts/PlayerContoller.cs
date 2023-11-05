@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerContoller : MonoBehaviour {
@@ -64,6 +65,10 @@ public class PlayerContoller : MonoBehaviour {
 			ScoreManager.AddScore(999);
 		}
 
+		if (kbd.backspaceKey.wasPressedThisFrame) {
+			SceneManager.LoadScene(0, LoadSceneMode.Single);
+		}
+		
 		float y = TileParent.position.y - transform.position.y;
 		bool wasGrounded = grounded;
 		grounded = !(y < ReferenceY || FallVelocity < 0);
