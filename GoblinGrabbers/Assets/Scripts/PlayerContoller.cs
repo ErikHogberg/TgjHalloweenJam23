@@ -17,6 +17,7 @@ public class PlayerContoller : MonoBehaviour {
 	[Min(0.01f)]
 	public float MoveSpeed = 1;
 	public float SpeedCap = 1;
+	public float DescendSpeedNeeded = 20;
 
 	[Min(0.01f)]
 	public float RunAcceleration = 1;
@@ -52,6 +53,12 @@ public class PlayerContoller : MonoBehaviour {
 			Anim.SetTrigger("JumpTrigger");
 		}
 
+		if(kbd.sKey.wasPressedThisFrame && speedCache > DescendSpeedNeeded){
+			speedCache -= DescendSpeedNeeded;
+			FloorManager.MoveDown();
+			ScoreManager.AddScore(999);
+		}
+
 		float y = TileParent.position.y - transform.position.y;
 		bool wasGrounded = grounded;
 		grounded = !(y < ReferenceY || FallVelocity < 0);
@@ -61,10 +68,6 @@ public class PlayerContoller : MonoBehaviour {
 
 			FallVelocity += Gravity;
 			transform.localPosition += FallVelocity * Time.deltaTime * Vector3.down;
-			// } else {
-			// 	var lpos = transform.localPosition;
-			// 	lpos.y = referenceY;
-			// 	transform.localPosition = lpos; 
 		} else {
 			FallVelocity = 0;
 			if (!wasGrounded) {
@@ -72,11 +75,10 @@ public class PlayerContoller : MonoBehaviour {
 				Anim.SetBool("IsGrounded", true);
 			}
 		}
-		// else if (!wasGrounded) Anim.SetBool("", true);
 
-		// if (kbd.fKey.wasPressedThisFrame) {
-		// 	CamControls.FlipMode();
-		// }
+	// }
+
+	// private void Update() {
 
 		speedCache = Mathf.Max(6f * Time.deltaTime, Mathf.MoveTowards(speedCache, SpeedCap, RunAcceleration * Time.deltaTime));
 
@@ -88,7 +90,6 @@ public class PlayerContoller : MonoBehaviour {
 		} else {
 			TileParent.localPosition -= speedCache * Time.deltaTime * Vector3.back;
 		}
-
 	}
 
 	public static float LastDescendZ = 0;
