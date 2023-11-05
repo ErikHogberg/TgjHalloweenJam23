@@ -27,11 +27,15 @@ public class Tile : MonoBehaviour {
 			hasWaves
 			&& FloorManager.CurrentFloorWaves.TryGetNearestWave(z, out var bestWave)
 		) {
-			int rolledEnemyIndex = bestWave.RolledEnemyIndex+1;
+			int rolledEnemyIndex = bestWave.RolledEnemyIndex + 1;
 			for (int i = 0; i < rolledEnemyIndex; i++) {
 				string randomEnemyKey = bestWave.RandomEnemy;
 				if (EnemyPooler.TryGet(randomEnemyKey, out var goblinPrefab)) {
-					var newEnemy = Instantiate(goblinPrefab, transform.position + Vector3.forward * UnityEngine.Random.Range(1f,-1f), quaternion.identity, transform);
+					var newEnemy = Instantiate(
+						goblinPrefab, transform.position + Vector3.forward * UnityEngine.Random.Range(1f, -1f),
+						CamControls.RightMode ? Quaternion.identity : Quaternion.AngleAxis(180f, Vector3.up),
+						transform
+					);
 					Debug.Log($"spawned {newEnemy.name}");
 				} else {
 					Debug.LogWarning($"could not find {randomEnemyKey} in pool");

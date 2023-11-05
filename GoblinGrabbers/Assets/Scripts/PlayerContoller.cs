@@ -21,21 +21,21 @@ public class PlayerContoller : MonoBehaviour {
 	public float JumpVelocity = 1;
 	public float Gravity = 1;
 
-	float referenceY = 0;
+	public float ReferenceY { get; private set; } = 0;
 	float FallVelocity = 0;
 
 	float speedCache = 0;
 	bool grounded = false;
 
 	private void Start() {
-		referenceY = TileParent.position.y - transform.position.y;
+		ReferenceY = TileParent.position.y - transform.position.y;
 		speedCache = MoveSpeed;
 	}
 
 	void Update() {
 		var kbd = Keyboard.current;
 
-		if (kbd.spaceKey.wasPressedThisFrame) {
+		if (kbd.spaceKey.wasPressedThisFrame && grounded) {
 			FallVelocity = -JumpVelocity;
 			Anim.transform.localPosition = new Vector3(0, -1.2f, 0);
 			Anim.SetTrigger("JumpTrigger");
@@ -43,7 +43,7 @@ public class PlayerContoller : MonoBehaviour {
 
 		float y = TileParent.position.y - transform.position.y;
 		bool wasGrounded = grounded;
-		grounded = !(y < referenceY || FallVelocity < 0);
+		grounded = !(y < ReferenceY || FallVelocity < 0);
 		if (!grounded) {
 			FallVelocity += Gravity;
 			transform.localPosition += FallVelocity * Time.deltaTime * Vector3.down;
@@ -72,7 +72,7 @@ public class PlayerContoller : MonoBehaviour {
 
 	public static float LastDescendZ = 0;
 	public void Descend(float y) {
-		referenceY += y;
+		ReferenceY += y;
 		CamControls.FlipMode();
 		Anim.transform.localRotation = CamControls.RightMode ? Quaternion.identity : Quaternion.AngleAxis(180, Vector3.up);
 		LastDescendZ = transform.position.z;
