@@ -33,8 +33,8 @@ public class FloorManager : MonoBehaviour {
 	public static float PrincessProgress = 1;
 	public static float DragonProgress = 1;
 
-	public UnityEvent OnWin; 
-	public UnityEvent OnLose; 
+	public UnityEvent OnWin;
+	public UnityEvent OnLose;
 
 	private void Start() {
 		DragonFloor = -1;
@@ -46,9 +46,7 @@ public class FloorManager : MonoBehaviour {
 		DragonFloor += DragonSpeed * .01f * Time.deltaTime;
 		DragonProgress = DragonFloor / FloorCount;
 		if (DragonFloor - 1 > CurrentFloor) {
-			Debug.Log("lose");
-			// TODO: lose
-			OnLose.Invoke();
+			Lose();
 		}
 	}
 
@@ -64,9 +62,7 @@ public class FloorManager : MonoBehaviour {
 			PlayerCharacter.Descend(YOffset);
 
 			if (CurrentFloor > FloorCount) {
-				Debug.Log("win");
-				// TODO: win
-				OnWin.Invoke();
+				Win();
 			}
 		}
 		PrincessProgress = ((float)CurrentFloor) / FloorCount;
@@ -83,4 +79,17 @@ public class FloorManager : MonoBehaviour {
 		}
 	}
 
+	public void Win() {
+		Debug.Log("win");
+		Time.timeScale = 0.001f;
+		// TODO: win
+		OnWin.Invoke();
+	}
+
+	public void Lose() {
+		Debug.Log("lose");
+		// TODO: lose
+		Time.timeScale = 0.001f;
+		OnLose.Invoke();
+	}
 }

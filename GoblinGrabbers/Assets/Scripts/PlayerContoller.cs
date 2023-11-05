@@ -66,9 +66,16 @@ public class PlayerContoller : MonoBehaviour {
 		}
 
 		if (kbd.backspaceKey.wasPressedThisFrame) {
+			Time.timeScale = 1;
 			SceneManager.LoadScene(0, LoadSceneMode.Single);
 		}
-		
+		if (kbd.oKey.wasPressedThisFrame) {
+			FloorManager.MainInstance.Win();
+		}
+		if (kbd.pKey.wasPressedThisFrame) {
+			FloorManager.MainInstance.Lose();
+		}
+
 		float y = TileParent.position.y - transform.position.y;
 		bool wasGrounded = grounded;
 		grounded = !(y < ReferenceY || FallVelocity < 0);
