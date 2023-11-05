@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerContoller : MonoBehaviour {
 
@@ -41,6 +42,7 @@ public class PlayerContoller : MonoBehaviour {
 
 		if (goblins.TryPeek(out var result)) {
 			if (kbd.spaceKey.wasPressedThisFrame && result.Wack()) {
+				ScoreManager.AddScore(12);
 				goblins.Dequeue();
 			}
 			speedCache -= goblins.Count * GoblinSlowdown * Time.deltaTime;
@@ -54,7 +56,7 @@ public class PlayerContoller : MonoBehaviour {
 		bool wasGrounded = grounded;
 		grounded = !(y < ReferenceY || FallVelocity < 0);
 		if (!grounded) {
-			if(wasGrounded)
+			if (wasGrounded)
 				Anim.SetBool("IsGrounded", false);
 
 			FallVelocity += Gravity;
@@ -91,6 +93,7 @@ public class PlayerContoller : MonoBehaviour {
 
 	public static float LastDescendZ = 0;
 	public void Descend(float y) {
+		ScoreManager.AddScore(99);
 		goblins.Clear();
 		ReferenceY += y;
 		CamControls.FlipMode();
@@ -99,6 +102,7 @@ public class PlayerContoller : MonoBehaviour {
 	}
 
 	public void AttachGoblin(GoblinGRABBER goblin) {
+		ScoreManager.AddScore(-8);
 		goblins.Enqueue(goblin);
 	}
 }
