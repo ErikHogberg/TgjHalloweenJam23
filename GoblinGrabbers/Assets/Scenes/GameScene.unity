@@ -427,7 +427,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCharacter: {fileID: 939024663}
+  FloorCount: 10
   YOffset: 10
+  DragonSpeed: 2
   FloorPrefab: {fileID: 824599873379273021, guid: 68c752ffe89476a4eb04187d996c0103,
     type: 3}
   FloorParent: {fileID: 1632291008}

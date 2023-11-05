@@ -11,8 +11,8 @@ public class DragonBar : MonoBehaviour {
 	float dragonProgress = 1;
 
 	void Update() {
-		princessProgress = Mathf.MoveTowards(princessProgress, 0, .15f * Time.deltaTime);
-		dragonProgress = Mathf.MoveTowards(dragonProgress, 0, .1f * Time.deltaTime);
+		princessProgress = 1f-FloorManager.PrincessProgress; //Mathf.MoveTowards(princessProgress, 0, .15f * Time.deltaTime);
+		dragonProgress = 1f-FloorManager.DragonProgress; //Mathf.MoveTowards(dragonProgress, 0, .1f * Time.deltaTime);
 
 		FGBar.localScale = new Vector3(1, princessProgress, 1);
 		BGBar.localScale = new Vector3(1, dragonProgress, 1);
