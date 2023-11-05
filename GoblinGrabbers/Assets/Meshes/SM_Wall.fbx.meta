@@ -3,7 +3,27 @@ guid: 6fbf91cd60e13ba499d19257929a1302
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ceiling
+    second: {fileID: 2100000, guid: 78a75a9341509b246a366cda184de619, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Torch
+    second: {fileID: 2100000, guid: 659f5a54063467c4d9796e769680e0b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trim1
+    second: {fileID: 2100000, guid: 2d0399b08e25b6a41a37fac8f511954e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trim2
+    second: {fileID: 2100000, guid: c0c52e7d147a3b04988f20ef750e6a31, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
