@@ -45,7 +45,7 @@ public class FloorManager : MonoBehaviour {
 	private void Update() {
 		DragonFloor += DragonSpeed * .01f * Time.deltaTime;
 		DragonProgress = DragonFloor / FloorCount;
-		if (DragonFloor - 1 > CurrentFloor) {
+		if (DragonFloor > CurrentFloor) {
 			Lose();
 		}
 	}
