@@ -46,7 +46,7 @@ public class PlayerContoller : MonoBehaviour {
 			speedCache -= goblins.Count * GoblinSlowdown * Time.deltaTime;
 		} else if (kbd.spaceKey.wasPressedThisFrame && grounded) {
 			FallVelocity = -JumpVelocity;
-			Anim.transform.localPosition = new Vector3(0, -1.2f, 0);
+			Anim.transform.localPosition = new Vector3(0, -1f, 0);
 			Anim.SetTrigger("JumpTrigger");
 		}
 
@@ -54,6 +54,9 @@ public class PlayerContoller : MonoBehaviour {
 		bool wasGrounded = grounded;
 		grounded = !(y < ReferenceY || FallVelocity < 0);
 		if (!grounded) {
+			if(wasGrounded)
+				Anim.SetBool("IsGrounded", false);
+
 			FallVelocity += Gravity;
 			transform.localPosition += FallVelocity * Time.deltaTime * Vector3.down;
 			// } else {
@@ -62,6 +65,10 @@ public class PlayerContoller : MonoBehaviour {
 			// 	transform.localPosition = lpos; 
 		} else {
 			FallVelocity = 0;
+			if (!wasGrounded) {
+				Anim.transform.localPosition = new Vector3(0, -1f, 0);
+				Anim.SetBool("IsGrounded", true);
+			}
 		}
 		// else if (!wasGrounded) Anim.SetBool("", true);
 
