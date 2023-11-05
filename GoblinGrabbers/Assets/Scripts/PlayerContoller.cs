@@ -9,6 +9,7 @@ public class PlayerContoller : MonoBehaviour {
 	// public CamControls Cam;
 	public Transform TileParent;
 	public Animator Anim;
+	[Min(0.001f)]
 	public float AnimSpeedMul = 1f;
 
 	[Space]
@@ -20,12 +21,15 @@ public class PlayerContoller : MonoBehaviour {
 	public float RunAcceleration = 1;
 	public float JumpVelocity = 1;
 	public float Gravity = 1;
+	public float GoblinSlowdown = 1;
 
 	public float ReferenceY { get; private set; } = 0;
 	float FallVelocity = 0;
 
-	float speedCache = 0;
+	public float speedCache { get; private set; } = 0;
 	bool grounded = false;
+
+	Queue<GoblinGRABBER> goblins = new();
 
 	private void Start() {
 		ReferenceY = TileParent.position.y - transform.position.y;
@@ -35,7 +39,12 @@ public class PlayerContoller : MonoBehaviour {
 	void Update() {
 		var kbd = Keyboard.current;
 
-		if (kbd.spaceKey.wasPressedThisFrame && grounded) {
+		if (goblins.TryPeek(out var result)) {
+			if (kbd.spaceKey.wasPressedThisFrame && result.Wack()) {
+				goblins.Dequeue();
+			}
+			speedCache -= goblins.Count * GoblinSlowdown * Time.deltaTime;
+		} else if (kbd.spaceKey.wasPressedThisFrame && grounded) {
 			FallVelocity = -JumpVelocity;
 			Anim.transform.localPosition = new Vector3(0, -1.2f, 0);
 			Anim.SetTrigger("JumpTrigger");
@@ -47,20 +56,23 @@ public class PlayerContoller : MonoBehaviour {
 		if (!grounded) {
 			FallVelocity += Gravity;
 			transform.localPosition += FallVelocity * Time.deltaTime * Vector3.down;
-		// } else {
-		// 	var lpos = transform.localPosition;
-		// 	lpos.y = referenceY;
-		// 	transform.localPosition = lpos; 
+			// } else {
+			// 	var lpos = transform.localPosition;
+			// 	lpos.y = referenceY;
+			// 	transform.localPosition = lpos; 
+		} else {
+			FallVelocity = 0;
 		}
-			// else if (!wasGrounded) Anim.SetBool("", true);
+		// else if (!wasGrounded) Anim.SetBool("", true);
 
 		// if (kbd.fKey.wasPressedThisFrame) {
 		// 	CamControls.FlipMode();
 		// }
 
-		speedCache = Mathf.MoveTowards(speedCache, SpeedCap, RunAcceleration * Time.deltaTime);
+		speedCache = Mathf.Max(6f * Time.deltaTime, Mathf.MoveTowards(speedCache, SpeedCap, RunAcceleration * Time.deltaTime));
 
-		Anim.SetFloat("Speed", speedCache * AnimSpeedMul);
+		// Anim.SetFloat("Speed", speedCache * AnimSpeedMul);
+		Anim.speed = speedCache * AnimSpeedMul;
 
 		if (CamControls.RightMode) {
 			TileParent.localPosition -= speedCache * Time.deltaTime * Vector3.forward;
@@ -72,9 +84,14 @@ public class PlayerContoller : MonoBehaviour {
 
 	public static float LastDescendZ = 0;
 	public void Descend(float y) {
+		goblins.Clear();
 		ReferenceY += y;
 		CamControls.FlipMode();
 		Anim.transform.localRotation = CamControls.RightMode ? Quaternion.identity : Quaternion.AngleAxis(180, Vector3.up);
 		LastDescendZ = transform.position.z;
+	}
+
+	public void AttachGoblin(GoblinGRABBER goblin) {
+		goblins.Enqueue(goblin);
 	}
 }
